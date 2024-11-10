@@ -1,0 +1,17 @@
+<!-- navbar.html -->
+<nav class="navbar">
+    <div class="navdiv">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/path-of-exile-logo.png') }}" alt="Path of exile">
+            <span class="logo-text">Path Of Exile</span>
+        </div>
+        <ul class="menu">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Contact</a></li>
+            <li><a href="{{ url_for('builds') }}">Builds</a></li>
+            <button id="signInButton"><a href="{{ url_for('signIn') }}">SignIn</a></button>
+            <button id="logInButton"><a href="{{ url_for('logIn') }}">LogIn</a></button>
+        </ul>
+    </div>
+</nav>

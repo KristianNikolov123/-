@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='logIn.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/path-of-exile-logo.png') }}" type="image/icon">
+    <title>Path Of Exile</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="registration">
+        <h1>LogIn Page</h1>
+        <hr>
+        <div class="email-container">
+            <p>Email:</p>
+            <input class="email-input" id="email" type="text" placeholder="Enter your email">
+        </div>
+        <div class="password-container">
+            <p>Password</p>
+            <input class="password-input" id="password" type="password" placeholder="Enter your password">
+        </div>
+        <hr>
+        <button class="register-button" type="submit">Log In</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 75px; 
+    height: 75px;
+    margin-right: 20px;
+    border-radius: 8px; 
+    padding: 5px;
+}
+
+li a {
+    text-decoration: none;
+    color: white;
+    margin-right: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease; 
+}
+
+li a:hover {
+    color: #dfe3ee;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+    padding: 10px 0;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #ff7f50, #dd9a08, #ff4500);
+    color: white;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-text {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+body {
+    background-color: #E9EBEE;
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    border-radius: 8px;
+    background-color: white; 
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: rgb(241, 233, 233); 
+}
+
+@media (max-width: 768px) {
+    .navdiv {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 100%;
+        text-align: center;
+    }
+}
