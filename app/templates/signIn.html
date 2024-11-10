@@ -10,11 +10,21 @@
 <body>
     {% include 'navbar.html' %}
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
     <div class="registration">
         <h1>Registration Page</h1>
         <p>Please fill in this form to create an account.</p>
 
-        <!-- Формата за регистрация с добавени name атрибути към полетата -->
+        
         <form method="POST" action="/signIn">
             <div class="first-name-container">
                 <p>First Name:</p>

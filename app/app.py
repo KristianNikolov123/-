@@ -1,15 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 
 app = Flask(__name__)
+app.secret_key = "your_secret_key" 
 
-# Конфигуриране на свързването с PostgreSQL база данни
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://myuser:mypassword@localhost:5432/mydatabase'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Дефиниране на User модела
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -24,8 +24,6 @@ class User(db.Model):
         self.email = email
         self.password = password
 
-
-# Route за Sign Up (регистрация)
 @app.route('/signIn', methods=['GET', 'POST'])
 def signIn():
     if request.method == 'POST':
@@ -34,42 +32,50 @@ def signIn():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        # Хеширане на паролата преди да я запишем в базата данни
+        
+        if User.query.filter_by(email=email).first():
+            return "Email address already exists. Please try logging in."
+
+        
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-        # Създаване на нов потребител с хешираната парола
+        
         new_user = User(first_name, last_name, email, hashed_password)
 
-        # Добавяне на новия потребител в базата данни
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            return redirect(url_for('index'))
-        except Exception as e:
-            db.session.rollback()
-            print("Error while adding user:", e)
+       
+        db.session.add(new_user)
+        db.session.commit()
 
+        return redirect(url_for('index'))
     return render_template('signIn.html')
 
-# Route за Log In (вход)
+
 @app.route('/logIn', methods=['GET', 'POST'])
 def logIn():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
 
-        # Проверка за съществуващ потребител с въведения имейл
+       
         user = User.query.filter_by(email=email).first()
 
-        # Проверка на паролата при вход, използвайки bcrypt
-        if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-            return redirect(url_for('index'))
+        if user:
+            
+            stored_password = user.password.encode('utf-8')
+
+           
+            if bcrypt.checkpw(password.encode('utf-8'), stored_password):
+                flash("Successfully logged in!", "success")
+                return redirect(url_for('index'))
+            else:
+                return "Invalid email or password. Please try again."
         else:
-            print("Invalid credentials. Please try again.")
+            return "Invalid email or password. Please try again."
 
     return render_template('logIn.html')
 
-# Начална страница
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
